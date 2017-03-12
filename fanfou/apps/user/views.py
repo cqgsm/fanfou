@@ -2,7 +2,7 @@ from django.contrib.auth import login, logout ,authenticate
 from django.shortcuts import render, redirect
 from django.views.generic.base import View, TemplateResponseMixin, RedirectView
 
-from fanfou.user import LoginForm
+from fanfou.user.forms import LoginForm
 
 
 # from django.views.decorators.csrf import csrf_exempt
