@@ -1,21 +1,27 @@
+'''
+Created on 2017-3-2
+
+@author: yimeng
+'''
+from datetime import datetime
+
+from django.contrib.admin import ModelAdmin
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from fanfou.common.utils import getPinyin
-
-
+from fanfou.utils.getpinyin import getPinyin
 # Create your models here.
 
-class CommonModel(models.Model):
+class BM(models.Model):
     creator = models.ForeignKey(User,blank=True, null=True, verbose_name=_('creator'), related_name="%(app_label)s_%(class)s_creator")
     created = models.DateTimeField(_('create time'),auto_now_add=True)
     updater = models.ForeignKey(User,blank=True, null=True, verbose_name=_('updater'), related_name="%(app_label)s_%(class)s_updater")
     updated = models.DateTimeField(_('update time'), auto_now=True)
     deleted = models.DateTimeField(_('delete time'), blank=True, null=True, default=None)
     pinyin = models.CharField(max_length=20, blank=True, null=True)
-    remark = models.TextField(blank=True, null=True)
-    
+    in_use = models.NullBooleanField(_('in use'), default=True, blank=True, null=True)
+    remark = models.TextField(_('remark'), blank=True, null=True)
     pinyin_field = None
     
     class Meta:
@@ -23,7 +29,7 @@ class CommonModel(models.Model):
         
     def save(self, *args, **kwargs):
         self.get_pinyin()
-        super(CommonModel,self).save(*args, **kwargs)
+        super(BM, self).save(*args, **kwargs)
         
     
     def get_pinyin(self):
@@ -32,6 +38,9 @@ class CommonModel(models.Model):
         else:
             pinyin_code = setattr(self, "pinyin", getPinyin(getattr(self, self.pinyin_field)))
             return pinyin_code
+        
+    def __str__(self):
+        return self.name
         
 
 class ContactInfo(models.Model):
@@ -52,5 +61,19 @@ class ContactInfo(models.Model):
     
     class Meta:
         abstract = True
+
+class BMAdmin(ModelAdmin):
+    exclude = ['creator', 'created', 'updater', 'updated', 'deleted', 'pinyin', 'remark', 'in_use',]
+    actions_on_top = False
+    actions_on_bottom = True
+    def save_model(self, request, obj, form, change):
+        if change:
+            setattr(obj, 'updater', request.user)
+            setattr(obj, 'updated', datetime.now())
+        else:
+            setattr(obj,'creator',request.user)
+            setattr(obj,'created',datetime.now())
+        super(BMAdmin, self).save_model(request, obj, form, change)
+        
         
     
