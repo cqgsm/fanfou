@@ -25,12 +25,13 @@ SECRET_KEY = 's_e=+hv5db*3(2jc59o4hxta5&a^#9j^gan8l!xxi58c4(o-5a'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
 
 INSTALLED_APPS = (
+    'wechat',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
