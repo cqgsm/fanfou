@@ -8,7 +8,7 @@ from django.contrib.auth.models import User as Auth_User
 from django.forms import Form, ModelForm, CharField, PasswordInput, ValidationError
 from django.utils.translation import ugettext_lazy as _
 
-from fanfou.user import User
+from fanfou.apps.user.models import User
 
 
 class LoginForm(Form):

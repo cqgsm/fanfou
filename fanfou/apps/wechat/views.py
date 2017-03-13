@@ -4,8 +4,8 @@ from json import dumps
 from django.http import HttpResponse
 from django.conf import settings
 
-from wechat.wechat import WeChatBase
-from wechat.utils import check_signature
+from fanfou.apps.wechat.wechat import WeChatBase
+from fanfou.apps.wechat.utils import check_signature
 # Create your views here.
 
 def wechat_main(request):

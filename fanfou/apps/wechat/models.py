@@ -1,5 +1,5 @@
 from django.db import models
-from common.generic import BM
+from fanfou.apps.common.generic import BM
 # Create your models here.
 class Wechat(BM):
     appid = models.CharField(max_length=60)

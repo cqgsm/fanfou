@@ -1,3 +1,6 @@
 .idea/
 .metadata/
 db.sqlite3
+fanfou/.idea/
+__pycache_
+migrations

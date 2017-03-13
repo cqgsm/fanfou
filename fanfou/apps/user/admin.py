@@ -1,8 +1,8 @@
 from django.contrib import admin
 
-from fanfou.common.generic import BMAdmin
-from fanfou.user.models import User
-from fanfou.user.forms import UserForm
+from fanfou.apps.common.generic import BMAdmin
+from fanfou.apps.user.models import User
+from fanfou.apps.user.forms import UserForm
 
 
 # Register your models here.

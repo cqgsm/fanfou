@@ -2,7 +2,7 @@ from django.contrib.auth.models import User as Auth_User
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from fanfou.common.generic import BM,ContactInfo
+from fanfou.apps.common.generic import BM, ContactInfo
 
 
 class User(BM, ContactInfo, Auth_User):
