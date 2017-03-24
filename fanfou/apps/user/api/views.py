@@ -59,7 +59,7 @@ class UserCreateAPIView(CreateAPIView):
 class UserRetrieveUpdateAPIView(RetrieveUpdateAPIView):
     serializer_class = UserRetrieveUpdateSerializer
     def get_object(self):
-        user = User.objects.get(user=self.request.user)
+        user = User.objects.get(auth_user=self.request.user)
         return user
 
 class EvaluationListCreateAPIView(ListCreateAPIView):
