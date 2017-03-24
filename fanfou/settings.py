@@ -31,14 +31,14 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = (
-    'fanfou.apps.wechat',
+    'fanfou.apps.wechat','fanfou.apps.user','fanfou.apps.dating','fanfou.apps.qiniu',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework','rest_framework.authtoken','rest_framework_docs',
+    'rest_framework','rest_framework.authtoken','corsheaders','rest_framework_docs',
 )
 
 REST_FRAMEWORK = {
@@ -50,6 +50,8 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 15
 }
 
 REST_FRAMEWORK_DOCS = {
@@ -57,6 +59,7 @@ REST_FRAMEWORK_DOCS = {
 }
 
 MIDDLEWARE_CLASSES = (
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -66,6 +69,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
 )
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'fanfou.urls'
 

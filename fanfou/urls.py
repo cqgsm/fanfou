@@ -4,8 +4,10 @@ from django.contrib import admin
 api_urls = [
     # url(r'^$',include('doc.urls')),
     url(r'^user/',include('fanfou.apps.user.api.urls')),
+    url(r'^dating/', include('fanfou.apps.dating.api.urls')),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^docs/', include('rest_framework_docs.urls')),
+    url(r'qiniu/', include('fanfou.apps.qiniu.urls')),
 ]
 
 urlpatterns = [
