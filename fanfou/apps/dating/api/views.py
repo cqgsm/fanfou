@@ -1,10 +1,14 @@
 from rest_framework.generics import RetrieveUpdateAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView, ListCreateAPIView
-
-from fanfou.apps.dating.api.serializers import ( DatingListCreateSerializer, DatingRetrieveUpdateSerializer,
-                                                 ParticipantRetrieveUpdateSerializer, ParticipantCreateListSerializer,
-                                                 Dating, Participant)
-
 from rest_framework.pagination import PageNumberPagination
+
+from fanfou.apps.common.api.permissions import UserIsCreator
+
+from .serializers import ( DatingListCreateSerializer, DatingRetrieveUpdateSerializer,
+                           ParticipantRetrieveUpdateSerializer, ParticipantCreateListSerializer,
+                           Dating, Participant)
+from .permissions import ParticipantPermission, DatingPermission
+
+
 # Create your views here.
 
 class DatingListCreateAPIView(ListCreateAPIView):
@@ -23,6 +27,7 @@ class DatingRetrieveUpdateAPIView(RetrieveUpdateAPIView):
     约会详情和更新
     '''
     serializer_class = DatingRetrieveUpdateSerializer
+    permission_classes = (DatingPermission, )
     queryset = Dating.objects.all()
 
 
@@ -36,6 +41,7 @@ class ParticipantCreateAPIView(CreateAPIView):
 class ParticipantRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     '''申请同意，删除'''
     serializer_class = ParticipantRetrieveUpdateSerializer
+    permission_classes = (ParticipantPermission,)
     queryset = Participant.objects.all()
 
 def test(request):

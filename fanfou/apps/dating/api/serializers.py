@@ -9,7 +9,7 @@ class ParticipantCreateListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Participant
         fields = ('dating', 'agree', 'creator', 'created', 'pk')
-        read_only_fields = ('creator','created', 'pk')
+        read_only_fields = ('creator','created', 'pk',)
 
 class ParticipantRetrieveUpdateSerializer(serializers.ModelSerializer):
     class Meta:

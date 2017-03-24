@@ -1,17 +1,20 @@
-# from django.contrib.auth.models import User
 
+from django.shortcuts import get_object_or_404
+
+from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.generics import GenericAPIView, RetrieveUpdateAPIView, CreateAPIView, ListCreateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import status
 from rest_framework.reverse import reverse
 from rest_framework.decorators import api_view
+
 
 from ..models import User, Evaluation
 from .serializers import ( UserLoginSerializer, TokenSerializer, UserCreaterSerializer,
                            UserRetrieveUpdateSerializer, EvaluationListCreateSerializer,
                            EvaluationRetrieveUpdateSerializer)
+from .permissions import EvaluationPermission
 
 @api_view(('GET',))
 def api_root(request, format=None):
@@ -52,14 +55,13 @@ class UserLogoutAPIView(APIView):
         Token.objects.filter(user=request.user).delete()
         return Response(status=status.HTTP_200_OK)
 
-
 class UserCreateAPIView(CreateAPIView):
     serializer_class = UserCreaterSerializer
 
 class UserRetrieveUpdateAPIView(RetrieveUpdateAPIView):
     serializer_class = UserRetrieveUpdateSerializer
     def get_object(self):
-        user = User.objects.get(auth_user=self.request.user)
+        user = get_object_or_404(User, auth_user=self.request.user)
         return user
 
 class EvaluationListCreateAPIView(ListCreateAPIView):
@@ -70,4 +72,5 @@ class EvaluationListCreateAPIView(ListCreateAPIView):
 
 class EvaluationRetrieveUpdateAPIView(RetrieveUpdateAPIView):
     serializer_class = EvaluationRetrieveUpdateSerializer
+    permission_classes = (EvaluationPermission,)
     queryset = Evaluation.objects.all()
